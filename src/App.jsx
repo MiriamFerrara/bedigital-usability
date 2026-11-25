@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdHXgLWY4B9dDr00Dl3SPHCpqD8QNAA2lWL6c-l_pRjFfV7iQ/formResponse";
 
-const DOCUMENTAZIONE_URL = `${import.meta.env.BASE_URL}BeDigital_Valutazione_Usabilita.pdf`;
+const DOCUMENTAZIONE_URL = `${import.meta.env.BASE_URL}BeDigital_Registro_Valutazione_Usabilita.pdf`;
 const QUESTIONARIO_URL   = "https://docs.google.com/forms/d/e/1FAIpQLSf8V1N8sEWE7P-TH93GIVT2xkFNuht-qCPHqxeUqdHVaxYYIw/viewform?usp=dialog";
 
 const FORM_ENTRIES = {
