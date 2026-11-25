@@ -67,7 +67,11 @@ const CATEGORIE_ERRORE = [
 ];
 
 export default function App() {
-  const [partecipante, setPartecipante] = useState('P-Test 1');
+  // Recupera l'ultimo partecipante salvato nel localStorage
+  const [partecipante, setPartecipante] = useState(() => {
+    return localStorage.getItem('bedigital_partecipante') || 'P-Test 1';
+  });
+
   const [taskId, setTaskId] = useState(TASKS[0].id);
   const [note, setNote] = useState('');
 
@@ -106,9 +110,14 @@ export default function App() {
     }
   }, []);
 
+  // Salva righe e partecipante corrente nel localStorage ad ogni modifica
   useEffect(() => {
     localStorage.setItem('bedigital_log', JSON.stringify(righe));
   }, [righe]);
+
+  useEffect(() => {
+    localStorage.setItem('bedigital_partecipante', partecipante);
+  }, [partecipante]);
 
   useEffect(() => {
     if (!attivo) return;
@@ -166,7 +175,7 @@ export default function App() {
   };
 
   const incrementaPartecipante = (attuale) => {
-    const match = attuale.match(/^(.*?)(\d+)$/);
+    const match = attuale.trim().match(/^(.*?)(\d+)$/);
     if (match) {
       return `${match[1]}${parseInt(match[2], 10) + 1}`;
     }
@@ -216,6 +225,7 @@ export default function App() {
       setStatoDrive({ testo: '⚠️ Salvato in locale (verifica connessione per Drive).', tipo: 'warn' });
     }
 
+    // Incrementa automaticamente il partecipante dopo il salvataggio
     setPartecipante((prev) => incrementaPartecipante(prev));
     resetForm();
   };
@@ -448,6 +458,8 @@ export default function App() {
                           if (window.confirm('Svuotare la tabella locale? (I dati già inviati su Google Drive restano salvati)')) {
                             setRighe([]);
                             setPartecipante('P-Test 1');
+                            localStorage.removeItem('bedigital_log');
+                            localStorage.removeItem('bedigital_partecipante');
                           }
                         }}
                         style={{ ...styles.btn, ...styles.btnDanger }}
